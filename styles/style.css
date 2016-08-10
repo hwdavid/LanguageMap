@@ -16,7 +16,7 @@ article, aside, canvas, details, embed,
 figure, figcaption, footer, header, hgroup, 
 menu, nav, output, ruby, section, summary,
 time, mark, audio, video {
-	margin: 0;
+    margin: 0;
 	padding: 0;
 	border: 0;
 	font-size: 100%;
@@ -47,27 +47,32 @@ table {
 	border-spacing: 0;
 }
 
+
+
 /* Default Styles 
 --------------------------------------------------------------------*/
 html { overflow-x:hidden; }
 
 body {
 	background: url('img/denim.png');
-	font-family: 'Droid Sans', sans-serif;;
+	font-family: 'Droid Sans', sans-serif;
     overflow-x:hidden;
     overflow-y:hidden;
 }
 
+/*避免导航条左右出现浮动*/
 .clearfix {
 	clear: both;
 }
 
+/*导航条+菜单*/
 .wrap {
 	width: 100%;
 /*	margin: 4em auto;*/
     margin: 0px;
 }
 
+/*导航条，定义了一级菜单的背景*/
 nav {
 	background: -webkit-gradient(linear, center top, center bottom, from(#fff), to(#ccc));
 	background-image: linear-gradient(#fff, #ccc);
@@ -78,14 +83,16 @@ nav {
     z-index: 1;
 }
 
+/*一级菜单元素*/
 .menu li {
 	float: left;
 	position: relative;
 }
 
+/*一级菜单链接*/
 .menu li a {
 	color: #444;
-	display: block;
+	display: block;/*始终显示*/
 	font-size: 14px;
 	line-height: 20px;
 	padding: 6px 12px;
@@ -93,7 +100,7 @@ nav {
 	vertical-align: middle;
 	text-decoration: none;
 }
-
+/*一级菜单鼠标悬停时凸显*/
 .menu li a:hover {
 	background: -webkit-gradient(linear, center top, center bottom, from(#ededed), to(#fff));
 	background-image: linear-gradient(#ededed, #fff);
@@ -104,32 +111,35 @@ nav {
 
 /* Dropdown styles */
 
+/*二级菜单*/
 .menu ul {
 	position: absolute;
 	left: -9999px;
 	list-style: none;
-	opacity: 0;
+	opacity: 0;/*透明*/
 	transition: opacity 1s ease;
 }
-
+/*二级菜单元素*/
 .menu ul li {
 	float: none;
 }
-
+/*二级菜单链接*/
 .menu ul a {
 	white-space: nowrap;
 }
 
 /* Displays the dropdown on hover and moves back into position */
+/*一级菜单鼠标悬停时下拉二级菜单*/
 .menu li:hover ul {
 	background: rgba(255,255,255,0.7);
 	border-radius: 0 0 6px 6px;
 	box-shadow: inset 0px 2px 4px rgba(0,0,0,0.4);
 	left: 5px;
-	opacity: 1;
+	opacity: 1;/*不透明*/
 }
 
 /* Persistant Hover State */
+/*一级菜单鼠标悬停时保持一级菜单凸显*/
 .menu li:hover a {
 	background: -webkit-gradient(linear, center top, center bottom, from(#ccc), to(#ededed));
 	background-image: linear-gradient(#ccc, #ededed);
@@ -137,14 +147,14 @@ nav {
 	box-shadow: inset 0px 0px 1px 1px rgba(0,0,0,0.1);
 	color: #222;
 }
-
+/*一级菜单鼠标悬停时二级菜单链接*/
 .menu li:hover ul a {
 	background: none;
 	border-radius: 0;
     background-image: linear-gradient(#ccc, #ededed);
 	box-shadow: none;
 }
-
+/*一级菜单鼠标悬停时二级菜单鼠标悬停*/
 .menu li:hover ul li a:hover {
 	background: -webkit-gradient(linear, center top, center bottom, from(#eee), to(#fff));
 	background-image: linear-gradient(#ededed, #fff);
@@ -152,22 +162,27 @@ nav {
 	box-shadow: inset 0px 0px 4px 2px rgba(0,0,0,0.3);
 }
 
+/*定义地图容器大小*/
 #container {min-height: 100%; min-width: 100%; margin: 10px;}
-
-
+/*整个网页大小要与地图容器相适应*/
 body,html,#container{
     height: 100%;
     margin: 0px;
     font:12px Arial;
     }
-.circle{
-   	border-radius: 6px;
-   	border: solid 1px silver;
-   	width: 35px;
-   	height: 16px;
-   	padding: 3px;
-   	text-align: center;
-   	line-height: 18px;
-   	max-width: 50px;
-    color:white;
-    }
+
+
+
+   
+/*定义点标记样式*/
+<link rel="stylesheet" href="http://cache.amap.com/lbs/static/main1119.css"/>
+         .marker {
+           color: #ff6600;
+           padding: 4px 10px;
+           border: 1px solid #fff;
+           white-space: nowrap;
+           font-size: 12px;
+           font-family: "";
+           background-color: #0066ff;
+       }
+  

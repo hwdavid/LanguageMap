@@ -1,0 +1,130 @@
+﻿
+<%@ page contentType="text/html; charset=gb2312" language="java"%> 
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"> 
+<html> 
+<head> 
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312"> 
+<title>用户注册</title> 
+<script language="javascript"> 
+function IsDigit(cCheck) 
+{ 
+return (('0'<=cCheck) && (cCheck<='9')); 
+} 
+
+function IsAlpha(cCheck) 
+{ 
+return ((('a'<=cCheck) && (cCheck<='z')) || (('A'<=cCheck) && (cCheck<='Z'))) 
+} 
+
+function IsValid() 
+{ 
+var struserName = reg.UserName.value; 
+for (nIndex=0; nIndex<struserName.length; nIndex++) 
+{ 
+cCheck = struserName.charAt(nIndex); 
+if (!(IsDigit(cCheck) || IsAlpha(cCheck))) 
+{ 
+return false; 
+} 
+} 
+return true; 
+} 
+function chkEmail(str) 
+{ 
+return str.search(/[\w\-]{1,}@[\w\-]{1,}\.[\w\-]{1,}/)==0?true:false 
+} 
+
+function docheck() 
+{ 
+if(reg.UserName.value=="") 
+{ 
+alert("请填写用户名"); 
+return false; 
+} 
+else if(!IsValid()) 
+{ 
+alert("用户名只能使用字母和数字"); 
+return false; 
+} 
+else if(reg.UserPassword.value=="") 
+{ 
+alert("请填写密码"); 
+return false; 
+} 
+else if(reg.UserPassword.value != reg.CUserPassword.value) 
+{ 
+alert("两次密码不一致"); 
+return false; 
+} 
+else if(reg.NickName.value =="") 
+{ 
+alert("请填写昵称"); 
+return false; 
+} 
+else if(reg.Email.value =="") 
+{ 
+alert("请填写邮箱"); 
+return false; 
+} 
+else if(!chkEmail(reg.Email.value)) 
+{ 
+alert("请填写有效的Email地址"); 
+return false; 
+} 
+else 
+{ 
+return true; 
+} 
+} 
+</script> 
+<STYLE type=text/css> 
+td, th { 
+font-family: Arial, Helvetica, sans-serif; 
+font-size: 14px; 
+line-height: 24px; 
+color: #333333; 
+} 
+</STYLE> 
+</head> 
+<body> 
+<h1 align="center">用户注册</h1> 
+<div align="center"> 
+<form name="reg" action="user_add.jsp" method="post" target="_self" onSubmit="return docheck()"> 
+<table width="90%" border="0"> 
+<tr> 
+<td width="50%" align="right" height="25"><font face="Arial, Helvetica, sans-serif">请输入要注册的用户名：</font></td> 
+<td width="50%" align="left" height="25"> 
+ <input type="text" name="UserName"> 
+<br> 
+<font color="red"> 用户名只能由字母和数字组成</font> 
+</td> 
+</tr> 
+<tr> 
+<td width="50%" align="right" height="25">请输入密码：</td> 
+<td width="50%" align="left" height="25"> <input type="password" name="UserPassword"></td> 
+</tr> 
+<tr> 
+<td width="50%" align="right" height="25">请输入确认密码：</td> 
+<td width="50%" align="left" height="25"> <input type="password" name="CUserPassword"></td> 
+</tr> 
+<tr> 
+<td width="50%" align="right" height="25">请输入昵称：</td> 
+<td width="50%" align="left" height="25"> <input type="text" name="NickName"></td> 
+</tr> 
+<tr> 
+<td width="50%" align="right" height="25">请选择性别：</td> 
+<td width="50%" align="left" height="25"> <input type="radio" name="Sex" value="0" checked>男 <input type="radio" name="Sex" value="1">女</td> 
+</tr> 
+<tr> 
+<td width="50%" align="right" height="25">请输入Email地址：</td> 
+<td width="50%" align="left" height="25"> <input type="text" name="Email"></td> 
+</tr> 
+</table> 
+<p> 
+<input type="submit" name="sub" value="注册">     
+<input type="reset" name="res" value="重填"> 
+</p> 
+</form> 
+</div> 
+</body> 
+</html> 

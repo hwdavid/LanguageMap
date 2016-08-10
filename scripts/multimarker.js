@@ -1,61 +1,65 @@
 ﻿
-   	var mapObj = new AMap.Map('container', {
+   
+   //初始化地图
+    var map = new AMap.Map('container', {
         resizeEnable: true,
         lang: 'zh_en',
        	zoom: 5,
        	zooms:[4,18],
        	center: [106.485352, 34.603692]
    	});
-   	var createMarker = function(data,hide) {
-   		var div = document.createElement('div');
-   		div.className = 'circle';
-   		var r = Math.floor(data.count / 1024);
-   		div.style.backgroundColor = hide?'#393':'#09f';
-   		div.innerHTML = data.count || 0;
-   		var marker = new AMap.Marker({
-   		    content: div,
-   		    title:data.name,
-   			position: data.center.split(','),
-   			offset: new AMap.Pixel(-24, 5),
-   			zIndex: data.count
-   		});
-   		marker.subMarkers = [];
-   		if(data.name==='北京市'||data.name==='河南省'){
-   		  marker.setLabel({content:'&larr;请点击',offset:new AMap.Pixel(45,0)})
-          mapObj.setCenter(marker.getPosition());
-   		}
-   		if(!hide){
-   			marker.setMap(mapObj)
-   		}
-   		if(data.subDistricts&&data.subDistricts.length){
-   			for(var i = 0 ; i<data.subDistricts.length;i+=1){
-   				marker.subMarkers.push(createMarker(data.subDistricts[i],true));
-   			}
-   		}
-   		return marker;
-   	}
-   	var _onZoomEnd = function(e) {
-   		if (mapObj.getZoom() < 6) {
-   			for (var i = 0; i < markers.length; i += 1) {
-   				mapObj.remove(markers[i].subMarkers)
-   			}
-   			mapObj.add(markers);
-   		}
-   	}
-   	var _onClick = function(e) {
-   		if(e.target.subMarkers.length){
-   			mapObj.add(e.target.subMarkers);
-   			mapObj.setFitView(e.target.subMarkers);
-   			mapObj.remove(markers)
-   		}
-   	}
-   	var markers = []; //province见Demo引用的JS文件
-   	for (var i = 0; i < provinces.length; i += 1) {
-   		var marker = createMarker(provinces[i]);
-   		markers.push(marker);
-   		AMap.event.addListener(marker, 'click', _onClick);
-   	}
-   	//mapObj.setFitView();
-   	AMap.event.addListener(mapObj, 'zoomend', _onZoomEnd);
-		
-  
+    
+   //添加地图缩放工具条
+    AMap.plugin(['AMap.ToolBar','AMap.Scale'],function(){
+        var toolBar = new AMap.ToolBar();
+        var scale = new AMap.Scale();
+        map.addControl(toolBar);
+        map.addControl(scale);
+    })
+    
+    
+   
+    //地图上添加标记
+    var infoWindow = new AMap.InfoWindow({offset:new AMap.Pixel(0,-30)});
+    var cluster, markers = [];
+    var index = 0;
+    addMarker(116.485352, 39.603692);
+    addMarker(116.391467, 39.927761);
+    addMarker(106.485352, 34.603692);
+    addMarker(107.485352, 35.603692);
+    addMarker(106.985352, 34.903692);
+    
+    
+    
+    function addMarker(x,y) {
+        var marker = new AMap.Marker({
+        icon: "img/mark_b.png",
+        position: [x, y]
+        });
+        markers.push(marker);//加一个标记，计数+1
+        index=index+1;//标记编号
+        marker.content='我是第'+index+'个Marker';//信息窗体内容
+        marker.on('click',markerClick);
+    } 
+    
+    // 添加点聚合
+    addCluster();
+         
+    
+    function addCluster() {
+        if (cluster) {
+            cluster.setMap(null);
+        }
+        map.plugin(["AMap.MarkerClusterer"], function() {
+            cluster = new AMap.MarkerClusterer(map, markers);
+        });
+    }
+    
+    //信息窗体
+    
+    function markerClick(e){
+        infoWindow.setContent(e.target.content);
+        infoWindow.open(map, e.target.getPosition());
+    }
+    
+     
